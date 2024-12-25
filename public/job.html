@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Listings with Filters</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Basic Styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+
+    #addJobBtn {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+      background-color: #e63434;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #addJobBtn:hover {
+      background-color: #0056b3;
+    }
+
+    #filters {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      margin-left:450px;
+      width: 780px;
+      height:40px;
+      gap:20px;
+    }
+
+    #filters input[type="text"] {
+      padding: 8px;
+      font-size: 14px;
+      width: 200px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+     
+    }
+
+    #filterSidebar {
+      position: absolute;
+      right: 30px;
+      top: 20px;
+      background-color: #59c4ad;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      width: 200px;
+    }
+
+    #filterSidebar h3 {
+      font-size: 18px;
+      margin: 0 0 10px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    #filterSidebar label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 5px;
+      color: #555;
+    }
+
+    #filterSidebar input[type="radio"],
+    #filterSidebar input[type="checkbox"] {
+      margin-right: 10px;
+    }
+
+    #jobListingsContainer {
+      flex: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .container {
+      display: flex;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    .job-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 320px;
+      position: relative;
+    }
+
+    .job-card h3 {
+      font-size: 18px;
+      margin: 0;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .company-info {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+    }
+
+    .company-info img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .role-salary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .role-salary .role {
+      font-size: 12px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+    }
+
+    .role-salary .role.FULL-TIME {
+      background-color: #4caf50;
+    }
+
+    .role-salary .role.PART-TIME {
+      background-color: #ffa500;
+    }
+
+    .role-salary .role.INTERN {
+      background-color: #007bff;
+    }
+
+    .location {
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .location i {
+      color: #ff6b6b;
+      margin-right: 5px;
+    }
+
+    .bookmark {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 18px;
+      cursor: pointer;
+      color: #ccc;
+    }
+
+    .bookmark.saved {
+      color: #f39c12;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      max-width: 400px;
+      width: 90%;
+      z-index: 1010;
+    }
+
+    .modal-content h3 {
+      margin-top: 0;
+    }
+
+    .modal-content input,
+    .modal-content select {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .modal-content button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background: #4caf50;
+      color: white;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Filters -->
+  <div id="filters">
+    <button id="addJobBtn">+ Add new Job</button>
+
+    <input type="text" id="keywordSearch" placeholder="Search by Job Title">
+    <input type="text" id="citySearch" placeholder="Search by City">
+    
+    
+    <button id="addJobBtn" onclick="location.href='saved-jobs.html'">Saved jobs</button>
+
+  </div>
+
+  <div class="container">
+    <!-- Filter Sidebar -->
+    <div id="filterSidebar">
+      <h3>Filter by Salary</h3>
+      <label><input type="radio" name="salaryRange" value="low"> Less than $50k</label>
+      <label><input type="radio" name="salaryRange" value="medium"> $50k - $100k</label>
+      <label><input type="radio" name="salaryRange" value="high"> Greater than $100k</label>
+
+      <h3>Filter by Job Role</h3>
+      <label><input type="checkbox" class="roleFilter" value="FULL-TIME"> FULL-TIME</label>
+      <label><input type="checkbox" class="roleFilter" value="PART-TIME"> PART-TIME</label>
+      <label><input type="checkbox" class="roleFilter" value="INTERN"> INTERN</label>
+      <button id="clearFilters" style="padding: 8px 16px; background-color: #8cecc1; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        Clear All Filters
+      </button>
+    </div>
+   
+    <!-- Job Listings -->
+    <div id="jobListingsContainer"></div>
+  </div>
+
+    <!-- Job Listings -->
+    <div id="jobListingsContainer"></div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="jobModal">
+    <div class="modal-content">
+      <h3>Add Job</h3>
+      <input type="text" id="jobTitle" placeholder="Job Title" required>
+      <input type="text" id="companyName" placeholder="Company Name" required>
+      <input type="text" id="location" placeholder="Location (e.g., City, Country)" required>
+      <select id="jobRole" required>
+        <option value="">Select Role</option>
+        <option value="FULL-TIME">FULL-TIME</option>
+        <option value="PART-TIME">PART-TIME</option>
+        <option value="INTERN">INTERN</option>
+      </select>
+      <input type="number" id="minSalary" placeholder="Min Salary ($)" required>
+      <input type="number" id="maxSalary" placeholder="Max Salary ($)" required>
+      <input type="file" id="logoUpload" accept="image/*">
+      <button id="saveJobBtn">Save</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getDatabase, ref, push, set, onValue ,update} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+    import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
+    import { remove } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
+    const firebaseConfig = {
+  apiKey: "AIzaSyCtsIMfbVCmxgdP8DxQYIpWiLUHfQ5-8-A",
+  authDomain: "home-services-b18c0.firebaseapp.com",
+  databaseURL: "https://home-services-b18c0-default-rtdb.firebaseio.com",
+  projectId: "home-services-b18c0",
+  storageBucket: "home-services-b18c0.appspot.com",
+  messagingSenderId: "630902927301",
+  appId: "1:630902927301:web:b68cd5ec6bcf6853b565ac",
+  measurementId: "G-QLWX4LC6EP"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const storage = getStorage(app);
+
+    const addJobBtn = document.getElementById("addJobBtn");
+    const jobModal = document.getElementById("jobModal");
+    const jobListingsContainer = document.getElementById("jobListingsContainer");
+    const keywordSearch = document.getElementById("keywordSearch");
+    const citySearch = document.getElementById("citySearch");
+    const roleFilters = document.querySelectorAll(".roleFilter");
+    const salaryFilters = document.querySelectorAll("input[name='salaryRange']");
+
+   
+
+    addJobBtn.addEventListener("click", () => jobModal.style.display = "flex");
+    jobModal.addEventListener("click", (e) => {
+      if (e.target === jobModal) jobModal.style.display = "none";
+    });
+
+    document.getElementById("saveJobBtn").addEventListener("click", async () => {
+  const jobTitleInput = document.getElementById("jobTitle");
+  const companyNameInput = document.getElementById("companyName");
+  const locationInput = document.getElementById("location");
+  const jobRoleInput = document.getElementById("jobRole");
+  const minSalaryInput = document.getElementById("minSalary");
+  const maxSalaryInput = document.getElementById("maxSalary");
+  const logoUploadInput = document.getElementById("logoUpload");
+
+  const jobTitle = jobTitleInput.value;
+  const companyName = companyNameInput.value;
+  const location = locationInput.value;
+  const jobRole = jobRoleInput.value;
+  const minSalary = minSalaryInput.value;
+  const maxSalary = maxSalaryInput.value;
+  const logoFile = logoUploadInput.files[0];
+
+  if (!jobTitle || !companyName || !location || !jobRole || !minSalary || !maxSalary) {
+    alert("Please fill all fields.");
+    return;
+  }
+
+  let logoURL = "";
+  if (logoFile) {
+    const logoRef = storageRef(storage, `logos/${logoFile.name}`);
+    await uploadBytes(logoRef, logoFile);
+    logoURL = await getDownloadURL(logoRef);
+  }
+
+  const jobData = {
+    jobTitle,
+    companyName,
+    location,
+    jobRole,
+    minSalary,
+    maxSalary,
+    logoURL,
+    bookmarked: "no",
+  };
+
+  const newJobRef = push(ref(database, "jobListings/"));
+  set(newJobRef, jobData);
+
+  // Clear the form fields
+  jobTitleInput.value = "";
+  companyNameInput.value = "";
+  locationInput.value = "";
+  jobRoleInput.value = "";
+  minSalaryInput.value = "";
+  maxSalaryInput.value = "";
+  logoUploadInput.value = "";
+
+  document.getElementById("jobModal").style.display = "none";
+});
+
+
+  const renderJobs = (jobs) => {
+      jobListingsContainer.innerHTML = "";
+      for (const id in jobs) {
+        const job = jobs[id];
+        const isBookmarked = job.bookmarked === "yes";
+
+        if (applyFilters(job)) {
+          const jobCard = document.createElement("div");
+          jobCard.className = "job-card";
+          jobCard.innerHTML = `
+            <h3>${job.jobTitle}</h3>
+            <div class="company-info">
+              <img src="${job.logoURL || 'https://via.placeholder.com/40'}" alt="Company Logo">
+              <span class="company-name">${job.companyName}</span>
+            </div>
+            <div class="role-salary">
+              <span class="role ${job.jobRole}">${job.jobRole}</span>
+              <span class="salary">Salary: $${job.minSalary} - $${job.maxSalary}</span>
+            </div>
+            <div class="location">
+              <i class="fas fa-map-marker-alt"></i>
+              ${job.location}
+              </div>
+            <i class="fas fa-bookmark bookmark ${isBookmarked ? "saved" : ""}" data-id="${id}"></i>
+        `;
+        jobListingsContainer.appendChild(jobCard);
+
+        jobCard.querySelector(".bookmark").addEventListener("click", () => toggleBookmark(id, job));
+    }
+      }
+    };
+    let jobsData = {};
+
+// Function to apply filters
+const applyFilters = (job) => {
+  const keyword = keywordSearch.value.toLowerCase();
+  const city = citySearch.value.toLowerCase();
+
+  // Check if keyword matches
+  if (keyword && !job.jobTitle.toLowerCase().includes(keyword)) return false;
+
+  // Check if city matches
+  if (city && !job.location.toLowerCase().includes(city)) return false;
+
+  // Check role filters
+  const selectedRoles = Array.from(roleFilters).filter(f => f.checked).map(f => f.value);
+  if (selectedRoles.length > 0 && !selectedRoles.includes(job.jobRole)) return false;
+
+  // Check salary filters
+  const selectedSalary = Array.from(salaryFilters).find(f => f.checked)?.value;
+  if (selectedSalary === "low" && job.minSalary > 50000) return false;
+  if (selectedSalary === "medium" && (job.minSalary < 50000 || job.maxSalary > 100000)) return false;
+  if (selectedSalary === "high" && job.maxSalary < 100000) return false;
+
+  return true;
+};
+
+// Select the Clear All Filters button
+const clearFiltersButton = document.getElementById("clearFilters");
+
+// Function to clear all filters
+const clearAllFilters = () => {
+  keywordSearch.value = "";
+  citySearch.value = "";
+  
+  // Clear role checkboxes
+  roleFilters.forEach(filter => filter.checked = false);
+
+  // Clear salary radio buttons
+  salaryFilters.forEach(filter => filter.checked = false);
+
+  // Re-render the jobs with no filters applied
+  renderJobs(jobsData);
+};
+
+// Add event listener to Clear All Filters button
+clearFiltersButton.addEventListener("click", clearAllFilters);
+
+
+const fetchJobs = () => {
+      onValue(ref(database, "jobListings"), (snapshot) => {
+        jobsData = snapshot.val() || {};
+        renderJobs(jobsData);
+      });
+    };
+
+// Attach the filter function to the event listeners
+
+    keywordSearch.addEventListener("input", () => renderJobs(jobsData));
+    citySearch.addEventListener("input", () => renderJobs(jobsData));
+    roleFilters.forEach(filter => filter.addEventListener("change", () => renderJobs(jobsData)));
+    salaryFilters.forEach(filter => filter.addEventListener("change", () => renderJobs(jobsData)));
+
+
+ 
+    
+
+    const toggleBookmark = (jobId, job) => {
+      const newStatus = job.bookmarked === "yes" ? "no" : "yes";
+      update(ref(database, `jobListings/${jobId}`), { bookmarked: newStatus });
+    };
+
+
+
+    fetchJobs();
+    //fetchSavedJobs();
+
+
+  </script>
+</body>
+</html>
