@@ -5,241 +5,271 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Saved Jobs</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
-    }
-
-    header {
-      background-color: #000000;
-      color: white;
-      padding: 20px;
-      text-align: center;
-      font-size: 24px;
-      font-weight: bold;
-    }
-
-    .container {
-      padding: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .job-cards {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-    }
-
-    .job-card {
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-      width: 320px;
-      position: relative;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .job-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .job-card h3 {
-      font-size: 18px;
-      margin: 0;
-      font-weight: bold;
-      color: #333;
-    }
-
-    .company-info {
-      display: flex;
-      align-items: center;
-      margin: 10px 0;
-    }
-
-    .company-info img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      margin-right: 10px;
-    }
-
-    .role-salary {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 10px;
-    }
-
-    .role-salary .role {
-      font-size: 12px;
-      padding: 5px 10px;
-      border-radius: 5px;
-      color: white;
-      font-weight: bold;
-    }
-
-    .role-salary .role.FULL-TIME {
-      background-color: #4caf50;
-    }
-
-    .role-salary .role.PART-TIME {
-      background-color: #ffa500;
-    }
-
-    .role-salary .role.INTERN {
-      background-color: #007bff;
-    }
-
-    .location {
-      margin: 10px 0;
-      display: flex;
-      align-items: center;
-      font-size: 14px;
-      color: #666;
-    }
-
-    .location i {
-      color: #ff6b6b;
-      margin-right: 5px;
-    }
-
-    .bookmark-btn {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      background: #007bff;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    .bookmark-btn:hover {
-      background-color: #0056b3;
-    }
-
-    .bookmark-btn.bookmarked {
-      background: #e63434;
-    }
-
-    .toast {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #333;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 5px;
-      font-size: 14px;
-      display: none;
-      z-index: 1000;
-    }
-
-    @media (max-width: 768px) {
-      .job-card {
-        width: 90%;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
+<header>Saved Jobs</header>  
 </head>
 <body>
-  <header>Saved Jobs</header>
+  <div class="navbar">
+    <div class="logo-container">
+      <img src="logo.jpg" alt="JobFinder Logo" class="logo-img">
+      <span class="logo-text">JobFinder</span>
+    </div>
+    <div class="nav-items">
+      <button id="addJobBtn">+ Add New Job</button>
+      <input type="text" id="keywordSearch" placeholder="Search by Job Title">
+      <input type="text" id="citySearch" placeholder="Search by City">
+      <div class="filter-dropdown">
+        <button id="filterToggle">Filters</button>
+        <div class="dropdown-content" id="filterSidebar">
+          <h3>Filter by Salary</h3>
+          <label><input type="radio" name="salaryRange" value="low"> Less than $50k</label>
+          <label><input type="radio" name="salaryRange" value="medium"> $50k - $100k</label>
+          <label><input type="radio" name="salaryRange" value="high"> Greater than $100k</label>
 
-  <div class="container">
-    <div class="job-cards" id="bookmarkedJobsContainer">
-      <!-- Bookmarked job cards will be dynamically inserted here -->
+          <h3>Filter by Job Role</h3>
+          <label><input type="checkbox" class="roleFilter" value="FULL-TIME"> FULL-TIME</label>
+          <label><input type="checkbox" class="roleFilter" value="PART-TIME"> PART-TIME</label>
+          <label><input type="checkbox" class="roleFilter" value="INTERN"> INTERN</label>
+          <button id="clearFilters">Clear All Filters</button>
+        </div>
+      </div>
+      <a href="job.html">
+        <button id="addJobBtn">Find Jobs</button>
+      </a>
+      
     </div>
   </div>
 
-  <div id="toast" class="toast"></div>
+  <div id="jobListingsContainer">
+    <!-- Saved job cards will be dynamically inserted here -->
+  </div>
+ <!-- Modal -->
+ <div class="modal" id="jobModal">
+  <div class="modal-content">
+    <h3>Add Job</h3>
+    <input type="text" id="jobTitle" placeholder="Job Title" required>
+    <input type="text" id="companyName" placeholder="Company Name" required>
+    <input type="text" id="location" placeholder="Location (e.g., City, Country)" required>
+    <select id="jobRole" required>
+      <option value="">Select Role</option>
+      <option value="FULL-TIME">FULL-TIME</option>
+      <option value="PART-TIME">PART-TIME</option>
+      <option value="INTERN">INTERN</option>
+    </select>
+    <input type="number" id="minSalary" placeholder="Min Salary ($)" required>
+    <input type="number" id="maxSalary" placeholder="Max Salary ($)" required>
+    <input type="file" id="logoUpload" accept="image/*">
+    <button id="saveJobBtn">Save</button>
+  </div>
+</div>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
-
+     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getDatabase, ref, push, set, onValue ,update} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+    import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
+    import { remove } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+    
     const firebaseConfig = {
-      apiKey: "AIzaSyCtsIMfbVCmxgdP8DxQYIpWiLUHfQ5-8-A",
-      authDomain: "home-services-b18c0.firebaseapp.com",
-      databaseURL: "https://home-services-b18c0-default-rtdb.firebaseio.com",
-      projectId: "home-services-b18c0",
-      storageBucket: "home-services-b18c0.appspot.com",
-      messagingSenderId: "630902927301",
-      appId: "1:630902927301:web:b68cd5ec6bcf6853b565ac",
-      measurementId: "G-QLWX4LC6EP"
+  apiKey: "AIzaSyCtsIMfbVCmxgdP8DxQYIpWiLUHfQ5-8-A",
+  authDomain: "home-services-b18c0.firebaseapp.com",
+  databaseURL: "https://home-services-b18c0-default-rtdb.firebaseio.com",
+  projectId: "home-services-b18c0",
+  storageBucket: "home-services-b18c0.appspot.com",
+  messagingSenderId: "630902927301",
+  appId: "1:630902927301:web:b68cd5ec6bcf6853b565ac",
+  measurementId: "G-QLWX4LC6EP"
     };
 
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
-    const bookmarkedJobsContainer = document.getElementById("bookmarkedJobsContainer");
-    const toast = document.getElementById("toast");
+    const storage = getStorage(app);
 
+    const addJobBtn = document.getElementById("addJobBtn");
+    const jobModal = document.getElementById("jobModal");
+    const jobListingsContainer = document.getElementById("jobListingsContainer");
+    const keywordSearch = document.getElementById("keywordSearch");
+    const citySearch = document.getElementById("citySearch");
+    const roleFilters = document.querySelectorAll(".roleFilter");
+    const salaryFilters = document.querySelectorAll("input[name='salaryRange']");
+
+   
+
+    addJobBtn.addEventListener("click", () => jobModal.style.display = "flex");
+    jobModal.addEventListener("click", (e) => {
+      if (e.target === jobModal) jobModal.style.display = "none";
+    });
+
+    document.getElementById("saveJobBtn").addEventListener("click", async () => {
+  const jobTitleInput = document.getElementById("jobTitle");
+  const companyNameInput = document.getElementById("companyName");
+  const locationInput = document.getElementById("location");
+  const jobRoleInput = document.getElementById("jobRole");
+  const minSalaryInput = document.getElementById("minSalary");
+  const maxSalaryInput = document.getElementById("maxSalary");
+  const logoUploadInput = document.getElementById("logoUpload");
+
+  const jobTitle = jobTitleInput.value;
+  const companyName = companyNameInput.value;
+  const location = locationInput.value;
+  const jobRole = jobRoleInput.value;
+  const minSalary = minSalaryInput.value;
+  const maxSalary = maxSalaryInput.value;
+  const logoFile = logoUploadInput.files[0];
+
+  if (!jobTitle || !companyName || !location || !jobRole || !minSalary || !maxSalary) {
+    alert("Please fill all fields.");
+    return;
+  }
+
+  let logoURL = "";
+  if (logoFile) {
+    const logoRef = storageRef(storage, `logos/${logoFile.name}`);
+    await uploadBytes(logoRef, logoFile);
+    logoURL = await getDownloadURL(logoRef);
+  }
+
+  const jobData = {
+    jobTitle,
+    companyName,
+    location,
+    jobRole,
+    minSalary,
+    maxSalary,
+    logoURL,
+    bookmarked: "no",
+  };
+
+  const newJobRef = push(ref(database, "jobListings/"));
+  set(newJobRef, jobData);
+
+  // Clear the form fields
+  jobTitleInput.value = "";
+  companyNameInput.value = "";
+  locationInput.value = "";
+  jobRoleInput.value = "";
+  minSalaryInput.value = "";
+  maxSalaryInput.value = "";
+  logoUploadInput.value = "";
+
+  document.getElementById("jobModal").style.display = "none";
+});
+
+
+
+
+  
+    const filterToggle = document.getElementById("filterToggle");
+    const filterSidebar = document.getElementById("filterSidebar");
+    const clearFiltersBtn = document.getElementById("clearFilters");
+
+    let savedJobs = [];
+
+    // Fetch saved jobs from Firebase
     const fetchBookmarkedJobs = () => {
       onValue(ref(database, "jobListings"), (snapshot) => {
-        bookmarkedJobsContainer.innerHTML = "";
         const jobs = snapshot.val() || {};
-        for (const jobId in jobs) {
-          const job = jobs[jobId];
-          if (job.bookmarked === "yes") {
-            renderJobCard(job, jobId);
-          }
-        }
+        savedJobs = Object.entries(jobs)
+          .filter(([_, job]) => job.bookmarked === "yes")
+          .map(([id, job]) => ({ id, ...job }));
+        applyFilters();
       });
     };
 
-    const renderJobCard = (job, jobId) => {
-      const jobCard = document.createElement("div");
-      jobCard.className = "job-card";
-      jobCard.innerHTML = `
-        <h3>${job.jobTitle}</h3>
-        <div class="company-info">
-          <img src="${job.logoURL || 'https://via.placeholder.com/40'}" alt="Company Logo">
-          <span class="company-name">${job.companyName}</span>
-        </div>
-        <div class="role-salary">
-          <span class="role ${job.jobRole}">${job.jobRole}</span>
-          <span class="salary">Salary: $${job.minSalary} - $${job.maxSalary}</span>
-        </div>
-        <div class="location">
-          <i class="fas fa-map-marker-alt"></i>
-          ${job.location}
-        </div>
-        <button class="bookmark-btn ${job.bookmarked === "yes" ? "bookmarked" : ""}" data-id="${jobId}">
-          ${job.bookmarked === "yes" ? "Remove from saved" : "Bookmark"}
-        </button>
-      `;
-      bookmarkedJobsContainer.appendChild(jobCard);
+    // Render jobs to the DOM
+    const renderJobs = (jobs) => {
+      jobListingsContainer.innerHTML = "";
+      jobs.forEach((job) => {
+        const jobCard = document.createElement("div");
+        jobCard.className = "job-card";
+        jobCard.innerHTML = `
+          
+          <h3>${job.jobTitle}</h3>
+          <div class="company-info">
+            <img src="${job.logoURL || 'https://via.placeholder.com/40'}" alt="Company Logo">
+            <span class="company-name">${job.companyName}</span>
+          </div>
+          <div class="role-salary">
+            <span class="role ${job.jobRole}">${job.jobRole}</span>
+            <span class="salary">Salary: $${job.minSalary} - $${job.maxSalary}</span>
+          </div>
+          <div class="location">
+            <i class="fas fa-map-marker-alt"></i>
+            ${job.location}
+          </div>
+          <i class="fas fa-bookmark bookmark-saved" data-id="${job.id}"></i>
+        `;
+        jobListingsContainer.appendChild(jobCard);
 
-      const bookmarkBtn = jobCard.querySelector(".bookmark-btn");
-      bookmarkBtn.addEventListener("click", () => toggleBookmarkStatus(jobId, job.bookmarked));
+        // Add event listener for removing bookmark
+        jobCard.querySelector(".bookmark-saved").addEventListener("click", () => {
+          removeBookmark(job.id);
+        });
+      });
     };
 
-    const toggleBookmarkStatus = (jobId, currentStatus) => {
-      const newStatus = currentStatus === "yes" ? "no" : "yes";
+    // Remove bookmark logic
+    const removeBookmark = (jobId) => {
       const jobRef = ref(database, `jobListings/${jobId}`);
-      update(jobRef, { bookmarked: newStatus })
+      update(jobRef, { bookmarked: "no" })
         .then(() => {
-          showToast(`Job ${newStatus === "yes" ? "saved" : "removed from saved"}!`);
+          console.log("Bookmark removed successfully!");
+          fetchBookmarkedJobs();
         })
-        .catch((error) => console.error("Error updating bookmark status:", error));
+        .catch((error) => {
+          console.error("Error removing bookmark:", error);
+        });
     };
 
-    const showToast = (message) => {
-      toast.textContent = message;
-      toast.style.display = "block";
-      setTimeout(() => {
-        toast.style.display = "none";
-      }, 3000);
+    // Apply all filters
+    const applyFilters = () => {
+      const keyword = keywordSearch.value.toLowerCase();
+      const city = citySearch.value.toLowerCase();
+
+      const selectedSalary = document.querySelector('input[name="salaryRange"]:checked')?.value;
+      const selectedRoles = Array.from(document.querySelectorAll('.roleFilter:checked')).map((cb) => cb.value);
+
+      const filteredJobs = savedJobs.filter((job) => {
+        const matchesKeyword = job.jobTitle.toLowerCase().includes(keyword);
+        const matchesCity = job.location.toLowerCase().includes(city);
+
+        const salary = (parseInt(job.minSalary) + parseInt(job.maxSalary)) / 2;
+        const matchesSalary =
+          (selectedSalary === "low" && salary < 50000) ||
+          (selectedSalary === "medium" && salary >= 50000 && salary <= 100000) ||
+          (selectedSalary === "high" && salary > 100000) ||
+          !selectedSalary;
+
+        const matchesRole = selectedRoles.length === 0 || selectedRoles.includes(job.jobRole);
+
+        return matchesKeyword && matchesCity && matchesSalary && matchesRole;
+      });
+
+      renderJobs(filteredJobs);
     };
+
+    // Event listeners for filters
+    keywordSearch.addEventListener("input", applyFilters);
+    citySearch.addEventListener("input", applyFilters);
+    document.querySelectorAll('input[name="salaryRange"]').forEach((radio) =>
+      radio.addEventListener("change", applyFilters)
+    );
+    document.querySelectorAll(".roleFilter").forEach((checkbox) =>
+      checkbox.addEventListener("change", applyFilters)
+    );
+
+    // Clear all filters
+    clearFiltersBtn.addEventListener("click", () => {
+      document.querySelectorAll('input[name="salaryRange"]').forEach((radio) => (radio.checked = false));
+      document.querySelectorAll(".roleFilter").forEach((checkbox) => (checkbox.checked = false));
+      keywordSearch.value = "";
+      citySearch.value = "";
+      applyFilters();
+    });
+
+    // Toggle filter sidebar
+    filterToggle.addEventListener("click", () => {
+      filterSidebar.style.display = filterSidebar.style.display === "block" ? "none" : "block";
+    });
 
     fetchBookmarkedJobs();
   </script>
