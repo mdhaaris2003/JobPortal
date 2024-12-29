@@ -10,44 +10,144 @@
 </head>
 <body>
 
+
+
+  <header class="navbar-os">
+    <!-- Top Row: Logo and Navigation -->
+    <div class="top-row-os">
+     
+
+      <!-- Navigation Links -->
+      <nav>
+        <ul class="nav-links-os">
+          <li><a href="#" class="active">Home</a></li>
+          <li><a href="#">Find Job</a></li>
+          <li><a href="#">Find Employers</a></li>
+          <li><a href="#">Job Alerts</a></li>
+          <li><a href="saved-jobs.html">Saved Job & Added by Me</a></li>
+        </ul>
+   
+      </nav>
+      <div class="info">
+        <p class="contact">+1-202-555-0178</p>
+        <select id="language-select" name="language">
+            <option value="en">English</option>
+            <option value="es">Spanish</option>
+            <option value="fr">French</option>
+            <option value="de">German</option>
+            <option value="it">Italian</option>
+        </select>
+
+    </div>
+
+    </div>
+  </header>
+    <!-- Bottom Row: Search, Buttons, and Profile -->
+    <div class="bottom-row-os">
+  
+
+       <!-- Logo Section -->
+       <div class="logo-os">
+        <img src="logo3.jpg" alt="Skill Hire Logo" class="logo-img">
+        <span style="font-weight: bold;font-size:x-large ;font-family: 'Times New Roman', Times, serif;">Job Finder</span>
+      </div>
+
+      <div class="dropdown-os">
+        <button class="dropbtn-os">
+          <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="India Flag" width="20" height="15">
+          <span>Select Country OS</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="dropdown-content-os">
+          <a href="#" data-country="india-os">
+            <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="India Flag" width="20" height="15">
+            India OS
+          </a>
+          <a href="#" data-country="usa-os">
+            <img src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" alt="USA Flag" width="20" height="15">
+            USA OS
+          </a>
+          <a href="#" data-country="canada-os">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Flag_of_Canada.svg" alt="Canada Flag" width="20" height="15">
+            Canada OS
+          </a>
+          <a href="#" data-country="germany-os">
+            <img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg" alt="Germany Flag" width="20" height="15">
+            Germany OS
+          </a>
+          <!-- Add more countries as needed -->
+        </div>
+      </div>
+      
+
+      <!-- Search Bar -->
+      <div class="search-bar-os">
+        <input type="text" placeholder="Job title, keyword, company" id="keywordaSearch">
+        <button><i class="fas fa-search" ></i></button>
+      </div>
+
+      <!-- Add Job Button -->
+      <button class="add-job-btn-os" id="addJobBtn">+ Add new Job</button>
+
+      <!-- User Profile -->
+      <div class="profile-os">
+        <i class="fas fa-user-circle"></i>
+  <div id="username" class="username"></div>      </div>
+
+
+
+    </div>
+  </header>
+
+  
   <!-- Filters -->
   
 
 
-  <div class="navbar">
-    <div class="logo-container">
-      <img src="logo.jpg" alt="JobFinder Logo" class="logo-img">
-      <span class="logo-text">JobFinder</span>
+  <div class="header-container">
+    <div class="qf">  <p class="quick-filters-text">Quick Filters</p>
+      <i class="fa-solid fa-bars" style="color: #000000; font-weight: bolder;"></i>
     </div>
+  
     <div class="nav-items">
-      <button id="addJobBtn">+ Add New Job</button>
-      <input type="text" id="keywordSearch" placeholder="Search by Job Title">
-      <input type="text" id="citySearch" placeholder="Search by City">
-      <div class="filter-dropdown">
-        <button id="filterToggle">Filters</button>
-        <div class="dropdown-content" id="filterSidebar">
-          <h3>Filter by Salary</h3>
-          <label><input type="radio" name="salaryRange" value="low"> Less than $50k</label>
-          <label><input type="radio" name="salaryRange" value="medium"> $50k - $100k</label>
-          <label><input type="radio" name="salaryRange" value="high"> Greater than $100k</label>
 
-          <h3>Filter by Job Role</h3>
-          <label><input type="checkbox" class="roleFilter" value="FULL-TIME"> FULL-TIME</label>
-          <label><input type="checkbox" class="roleFilter" value="PART-TIME"> PART-TIME</label>
-          <label><input type="checkbox" class="roleFilter" value="INTERN"> INTERN</label>
-          <button id="clearFilters">Clear All Filters</button>
-        </div>
-      </div>
-      <a href="saved-jobs.html">
-        <button id="addJobBtn">Saved Jobs</button>
-      </a>
       
+
+      <div class="search-container">
+        <input type="text" id="keywordSearch" placeholder="Search by Job Title">
+        <i class="search-icon fas fa-search"></i> <!-- Added search icon -->
+      </div>
+      <div class="location-container">
+        <input type="text" id="citySearch" placeholder="Search by City">
+        <i class="location-icon fas fa-map-marker-alt"></i> <!-- Added location icon -->
+      </div>
+
+<div class="filter-dropdown">
+    <button id="filterToggle">
+        <img src="filter-icon.png" alt="Filter Icon" width="20" height="20">
+        Filters
+    </button>
+
+    <div class="dropdown-content" id="filterSidebar">
+        <h3>Filter by Salary</h3>
+        <label><input type="radio" name="salaryRange" value="low"> Less than $50k</label>
+        <label><input type="radio" name="salaryRange" value="medium"> $50k - $100k</label>
+        <label><input type="radio" name="salaryRange" value="high"> Greater than $100k</label>
+
+        <h3>Filter by Job Role</h3>
+        <label><input type="checkbox" class="roleFilter" value="FULL-TIME"> FULL-TIME</label>
+        <label><input type="checkbox" class="roleFilter" value="PART-TIME"> PART-TIME</label>
+        <label><input type="checkbox" class="roleFilter" value="INTERN"> INTERN</label>
+        <button id="clearFilters">Clear All Filters</button>
     </div>
-  </div>
+</div>
+
+</div>
+</div>
  
 <!-- Job Listings -->
 <div id="jobListingsContainer"></div>
-</div>
+
    
   <!-- Modal -->
   <div class="modal" id="jobModal">
@@ -71,9 +171,11 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getDatabase, ref, push, set, onValue ,update} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+    import { getDatabase, ref, push, set, get,onValue ,update} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
     import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
     import { remove } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+    import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
+
     
     const firebaseConfig = {
   apiKey: "AIzaSyCtsIMfbVCmxgdP8DxQYIpWiLUHfQ5-8-A",
@@ -89,11 +191,15 @@
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
     const storage = getStorage(app);
+    const auth = getAuth(app);
+
 
     const addJobBtn = document.getElementById("addJobBtn");
     const jobModal = document.getElementById("jobModal");
     const jobListingsContainer = document.getElementById("jobListingsContainer");
     const keywordSearch = document.getElementById("keywordSearch");
+    const keywordaSearch = document.getElementById("keywordaSearch");
+
     const citySearch = document.getElementById("citySearch");
     const roleFilters = document.querySelectorAll(".roleFilter");
     const salaryFilters = document.querySelectorAll("input[name='salaryRange']");
@@ -161,61 +267,73 @@
 });
 
 
-  const renderJobs = (jobs) => {
-      jobListingsContainer.innerHTML = "";
-      for (const id in jobs) {
-        const job = jobs[id];
-        const isBookmarked = job.bookmarked === "yes";
 
-        if (applyFilters(job)) {
-          const jobCard = document.createElement("div");
-          jobCard.className = "job-card";
-          jobCard.innerHTML = `
-            <h3>${job.jobTitle}</h3>
-            <div class="company-info">
-              <img src="${job.logoURL || 'https://via.placeholder.com/40'}" alt="Company Logo">
-              <span class="company-name">${job.companyName}</span>
-            </div>
-            <div class="role-salary">
-              <span class="role ${job.jobRole}">${job.jobRole}</span>
-              <span class="salary">Salary: $${job.minSalary} - $${job.maxSalary}</span>
-            </div>
-            <div class="location">
-              <i class="fas fa-map-marker-alt"></i>
-              ${job.location}
-              </div>
-            <i class="fas fa-bookmark bookmark ${isBookmarked ? "saved" : ""}" data-id="${id}"></i>
-        `;
-        jobListingsContainer.appendChild(jobCard);
-
-        jobCard.querySelector(".bookmark").addEventListener("click", () => toggleBookmark(id, job));
-    }
-      }
-    };
-    let jobsData = {};
+  const countryLinksOS = document.querySelectorAll('.dropdown-content-os a');
+const dropbtnOS = document.querySelector('.dropbtn-os');
+let selectedCountry = ''; // Variable to store the selected country
 
 
-    //filter
-    const filterToggle = document.getElementById('filterToggle');
-    const filterSidebar = document.getElementById('filterSidebar');
 
-    filterToggle.addEventListener('click', () => {
-      filterSidebar.classList.toggle('active');
-    });
+countryLinksOS.forEach(link => {
+  link.addEventListener('click', (e) => {
+    const countryNameOS = e.target.textContent.replace(' OS', ''); // Remove " OS" from country name
+    const flagUrlOS = e.target.querySelector('img').src;
+    
+    dropbtnOS.innerHTML = `<img src="${flagUrlOS}" alt="${countryNameOS} Flag" width="20" height="15"> ${countryNameOS} OS <i class="fas fa-chevron-down"></i>`;
+    selectedCountry = countryNameOS.toLowerCase(); // Set the selected country
+    renderJobs(jobsData); // Re-render jobs with the new filter
+  });
+});
+
+
+
+
+let jobsData = {}; // Declare jobs data
+
+// Filter Toggle
+const filterToggle = document.getElementById('filterToggle');
+const filterSidebar = document.getElementById('filterSidebar');
+
+filterToggle.addEventListener('click', () => {
+  filterSidebar.classList.toggle('active');
+});
+
 // Function to apply filters
 const applyFilters = (job) => {
   const keyword = keywordSearch.value.toLowerCase();
   const city = citySearch.value.toLowerCase();
+  const keyworda = keywordaSearch.value.toLowerCase();
 
-  // Check if keyword matches
-  if (keyword && !job.jobTitle.toLowerCase().includes(keyword)) return false;
+  // Check if keyword matches job title, city, or company name
+  if (keyword && !(job.jobTitle.toLowerCase().includes(keyword) || 
+                   job.location.toLowerCase().includes(keyword) || 
+                   job.companyName.toLowerCase().includes(keyword))) {
+    return false;
+  }
 
-  // Check if city matches
-  if (city && !job.location.toLowerCase().includes(city)) return false;
+  // Check if city matches job location
+  if (city && !job.location.toLowerCase().includes(city)) {
+    return false;
+  }
+
+  // Check if keyworda matches job company name
+  if (keyworda && !job.companyName.toLowerCase().includes(keyworda)) {
+    return false;
+  }
+
+  // Apply country filter (if selected)
+  if (selectedCountry) {
+    const cleanedCountry = selectedCountry.trim().replace(/\s+/g, ' ').toLowerCase();
+    if (!job.location.toLowerCase().includes(cleanedCountry)) {
+      return false;
+    }
+  }
 
   // Check role filters
   const selectedRoles = Array.from(roleFilters).filter(f => f.checked).map(f => f.value);
-  if (selectedRoles.length > 0 && !selectedRoles.includes(job.jobRole)) return false;
+  if (selectedRoles.length > 0 && !selectedRoles.includes(job.jobRole)) {
+    return false;
+  }
 
   // Check salary filters
   const selectedSalary = Array.from(salaryFilters).find(f => f.checked)?.value;
@@ -226,19 +344,25 @@ const applyFilters = (job) => {
   return true;
 };
 
-// Select the Clear All Filters button
+// Clear All Filters
 const clearFiltersButton = document.getElementById("clearFilters");
 
 // Function to clear all filters
 const clearAllFilters = () => {
+  // Clear the keyword search, city search, and other input filters
   keywordSearch.value = "";
   citySearch.value = "";
-  
+  keywordaSearch.value = "";
+
   // Clear role checkboxes
   roleFilters.forEach(filter => filter.checked = false);
 
   // Clear salary radio buttons
   salaryFilters.forEach(filter => filter.checked = false);
+
+  // Reset the country dropdown
+  const dropbtnOS = document.querySelector('.dropbtn-os');
+  dropbtnOS.innerHTML = `<span>Select Country OS</span> <i class="fas fa-chevron-down"></i>`;
 
   // Re-render the jobs with no filters applied
   renderJobs(jobsData);
@@ -247,34 +371,149 @@ const clearAllFilters = () => {
 // Add event listener to Clear All Filters button
 clearFiltersButton.addEventListener("click", clearAllFilters);
 
-
+// Fetch Jobs from Firebase
 const fetchJobs = () => {
-      onValue(ref(database, "jobListings"), (snapshot) => {
-        jobsData = snapshot.val() || {};
-        renderJobs(jobsData);
-      });
-    };
+  onValue(ref(database, "jobListings"), (snapshot) => {
+    jobsData = snapshot.val() || {};
+    renderJobs(jobsData); // Render the jobs
+  });
+};
 
 // Attach the filter function to the event listeners
+keywordSearch.addEventListener("input", () => renderJobs(jobsData));
+keywordaSearch.addEventListener("input", () => renderJobs(jobsData));
+citySearch.addEventListener("input", () => renderJobs(jobsData));
+roleFilters.forEach(filter => filter.addEventListener("change", () => renderJobs(jobsData)));
+salaryFilters.forEach(filter => filter.addEventListener("change", () => renderJobs(jobsData)));
 
-    keywordSearch.addEventListener("input", () => renderJobs(jobsData));
-    citySearch.addEventListener("input", () => renderJobs(jobsData));
-    roleFilters.forEach(filter => filter.addEventListener("change", () => renderJobs(jobsData)));
-    salaryFilters.forEach(filter => filter.addEventListener("change", () => renderJobs(jobsData)));
+// Render Jobs
+const renderJobs = (jobs) => {
+  jobListingsContainer.innerHTML = ""; // Clear current job listings
+  for (const id in jobs) {
+    const job = jobs[id];
+    const isBookmarked = job.bookmarked === "yes";
+    console.log(job.jobId);
 
 
- 
+    if (applyFilters(job)) {
+      const jobCard = document.createElement("div");
+      jobCard.className = "job-card";
+      jobCard.innerHTML = `
+        <h3>${job.jobTitle}</h3>
+        <div class="company-info">
+          <img src="${job.logoURL || 'https://via.placeholder.com/40'}" alt="Company Logo">
+          <span class="company-name">${job.companyName}</span>
+        </div>
+        <div class="role-salary">
+          <span class="role ${job.jobRole}">${job.jobRole}</span>
+          <span class="salary">Salary: $${job.minSalary} - $${job.maxSalary}</span>
+        </div>
+        <div class="location">
+          <i class="fas fa-map-marker-alt"></i>
+          ${job.location}
+        </div>
+        <i class="fas fa-bookmark bookmark ${isBookmarked ? "saved" : ""}" data-id="${id}"></i>
+      `;
+
+      jobListingsContainer.appendChild(jobCard);
+
+      // Add event listener for bookmark
+      jobCard.querySelector(".bookmark").addEventListener("click", () => toggleBookmark(id, job));
+    }
+  }
+};
+
+// Toggle Bookmark Function
+const toggleBookmark = (jobId, job) => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const userUid = user.uid;
+      const userRef = ref(database, `users/${userUid}/bookmarkedJobs`);
+
+      // Fetch current bookmarked jobs
+      get(userRef)
+        .then((snapshot) => {
+          let bookmarkedJobs = snapshot.exists() ? snapshot.val() : [];
+
+          // Check if the job is already bookmarked
+          const index = bookmarkedJobs.indexOf(jobId);
+          if (index > -1) {
+            // Job is already bookmarked, remove it
+            bookmarkedJobs.splice(index, 1);
+          } else {
+            // Job is not bookmarked, add it
+            bookmarkedJobs.push(jobId);
+          }
+
+          // Update the database with an object
+          const updates = {};
+          updates['/users/' + userUid + '/bookmarkedJobs'] = bookmarkedJobs;
+
+          update(ref(database), updates)
+            .then(() => {
+              console.log(`Updated bookmarks: ${bookmarkedJobs}`);
+              job.bookmarked = index > -1 ? "no" : "yes"; // Update job bookmarked state
+              renderJobs(jobsData); // Re-render job cards
+            })
+            .catch((error) => {
+              console.error("Error updating bookmarks:", error);
+            });
+        })
+        .catch((error) => {
+          console.error("Error fetching bookmarks:", error);
+        });
+    } else {
+      console.log("User not logged in. Redirecting to login page.");
+      window.location.href = "./login.html";
+    }
+  });
+};
+
+// Initialize by fetching jobs
+fetchJobs();
+
+    //fetchSavedJobs();
+
+
     
 
-    const toggleBookmark = (jobId, job) => {
-      const newStatus = job.bookmarked === "yes" ? "no" : "yes";
-      update(ref(database, `jobListings/${jobId}`), { bookmarked: newStatus });
-    };
 
 
 
-    fetchJobs();
-    //fetchSavedJobs();
+
+
+    
+
+
+
+
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, fetch the username from the database
+        const userRef = ref(database, 'users/' + user.uid);
+        get(userRef).then((snapshot) => {
+          if (snapshot.exists()) {
+            const username = snapshot.val().username;
+            document.getElementById('username').textContent = `Welcome, ${username}`;
+          } else {
+            console.error("No user data found!");
+          }
+        }).catch((error) => {
+          console.error("Error fetching user data:", error);
+        });
+      } else {
+        // User is signed out, redirect to login page
+        window.location.href = './index.html';
+      }
+    });
+
+
+
+
+
+
+
 
 
   </script>
