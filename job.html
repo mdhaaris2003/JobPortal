@@ -10,8 +10,6 @@
 </head>
 <body>
 
-
-
   <header class="navbar-os">
     <!-- Top Row: Logo and Navigation -->
     <div class="top-row-os">
@@ -233,37 +231,49 @@
     return;
   }
 
-  let logoURL = "";
-  if (logoFile) {
-    const logoRef = storageRef(storage, `logos/${logoFile.name}`);
-    await uploadBytes(logoRef, logoFile);
-    logoURL = await getDownloadURL(logoRef);
-  }
+  // Ensure the user is signed in before proceeding
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      // User is signed in, get the user UID
+      const userUid = user.uid;
 
-  const jobData = {
-    jobTitle,
-    companyName,
-    location,
-    jobRole,
-    minSalary,
-    maxSalary,
-    logoURL,
-    bookmarked: "no",
-  };
+      let logoURL = "";
+      if (logoFile) {
+        const logoRef = storageRef(storage, `logos/${logoFile.name}`);
+        await uploadBytes(logoRef, logoFile);
+        logoURL = await getDownloadURL(logoRef);
+      }
 
-  const newJobRef = push(ref(database, "jobListings/"));
-  set(newJobRef, jobData);
+      const jobData = {
+        jobTitle,
+        companyName,
+        location,
+        jobRole,
+        minSalary,
+        maxSalary,
+        logoURL,
+        bookmarked: "no",
+        addedBy: userUid,  // Store the user UID as addedBy field
+      };
 
-  // Clear the form fields
-  jobTitleInput.value = "";
-  companyNameInput.value = "";
-  locationInput.value = "";
-  jobRoleInput.value = "";
-  minSalaryInput.value = "";
-  maxSalaryInput.value = "";
-  logoUploadInput.value = "";
+      const newJobRef = push(ref(database, "jobListings/"));
+      await set(newJobRef, jobData);
 
-  document.getElementById("jobModal").style.display = "none";
+      // Clear the form fields
+      jobTitleInput.value = "";
+      companyNameInput.value = "";
+      locationInput.value = "";
+      jobRoleInput.value = "";
+      minSalaryInput.value = "";
+      maxSalaryInput.value = "";
+      logoUploadInput.value = "";
+
+      document.getElementById("jobModal").style.display = "none";
+    } else {
+      // If user is not signed in, show alert and stop execution
+      alert("You must be logged in to add a job.");
+    }
+  });
 });
 
 
@@ -488,26 +498,10 @@ const toggleBookmark = (jobId, job) => {
   });
 };
 
-
-
 // Initialize by fetching jobs
 fetchJobs();
 
     //fetchSavedJobs();
-
-
-    
-
-
-
-
-
-
-    
-
-
-
-
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -528,13 +522,6 @@ fetchJobs();
         window.location.href = './index.html';
       }
     });
-
-
-
-
-
-
-
 
 
   </script>

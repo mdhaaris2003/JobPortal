@@ -92,12 +92,9 @@
   <div id="username" class="username"></div>      </div>
     </div>
   </header>
-
   
   <!-- Filters -->
   
-
-
   <div class="header-container">
     <div class="qf">  <p class="quick-filters-text">Quick Filters</p>
       <i class="fa-solid fa-bars" style="color: #000000; font-weight: bolder;"></i>
@@ -393,46 +390,57 @@ citySearch.addEventListener("input", filterAndRenderJobs);
 salaryFilters.forEach((filter) => filter.addEventListener("change", filterAndRenderJobs));
 roleFilters.forEach((filter) => filter.addEventListener("change", filterAndRenderJobs));
 
-// Render jobs
-const renderJobs = (jobs) => {
+
+let jobs=[];
+
+
+const renderJobs = (jobsList) => {
   jobListingsContainer.innerHTML = "";
-  if (jobs.length === 0) {
+  if (jobsList.length === 0) {
     jobListingsContainer.innerHTML = "<p>No jobs match your filters.</p>";
     return;
   }
 
-  // Get the current user UID from Firebase Authentication
-  const userUid = auth.currentUser ? auth.currentUser.uid : null;
+  // Get the current user's UID
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const userUid = user.uid;
 
-  jobs.forEach((job) => {
-    const jobCard = document.createElement("div");
-    jobCard.className = "job-card";
+      jobsList.forEach((job) => {
+        const jobCard = document.createElement("div");
+        jobCard.className = "job-card";
 
-    // Check if the job was added by the current user
-    const isAddedByCurrentUser = job.addedBy === userUid;
+        // Check if the job was added by the current user
+        const addedByMe = job.addedBy === userUid ? `<span class="added-by">Added by me</span>` : '';
 
-    jobCard.innerHTML = `
-      <h3>${job.jobTitle}</h3>
-      <div class="company-info">
-        <img src="${job.logoURL || 'https://via.placeholder.com/40'}" alt="Company Logo">
-        <span class="company-name">${job.companyName}</span>
-      </div>
-      <div class="role-salary">
-        <span class="role ${job.jobRole}">${job.jobRole}</span>
-        <span class="salary">Salary: $${job.minSalary} - $${job.maxSalary}</span>
-      </div>
-      <div class="location">
-        <i class="fas fa-map-marker-alt"></i>
-        ${job.location}
-      </div>
-      <i class="fas fa-bookmark bookmark-saved" data-id="${job.id}"></i>
-      ${isAddedByCurrentUser ? '<div class="added-by-me">Added by me</div>' : ''}
-    `;
+        jobCard.innerHTML = `
+          <h3>${job.jobTitle}</h3>
+          <div class="company-info">
+            <img src="${job.logoURL || 'https://via.placeholder.com/40'}" alt="Company Logo">
+            <span class="company-name">${job.companyName}</span>
+          </div>
+          <div class="role-salary">
+            <span class="role ${job.jobRole}">${job.jobRole}</span>
+            <span class="salary">Salary: $${job.minSalary} - $${job.maxSalary}</span>
+          </div>
+          <div class="location">
+            <i class="fas fa-map-marker-alt"></i>
+            ${job.location}
+          </div>
+          ${addedByMe} <!-- Display "Added by me" if the job was added by the current user -->
+          <i class="fas fa-bookmark bookmark-saved ${job.bookmarked === 'yes' ? 'saved' : ''}" data-id="${job.id}"></i>
+        `;
+        
+        jobListingsContainer.appendChild(jobCard);
 
-    jobListingsContainer.appendChild(jobCard);
+        // Add event listener to the bookmark icon to toggle the saved state
+        jobCard.querySelector(".bookmark-saved").addEventListener("click", () => toggleBookmark(job.id, job));
+      });
+    } else {
+      console.log("User is not signed in.");
+    }
   });
 };
-
 
 // Listen for changes in authentication state
 onAuthStateChanged(auth, (user) => {
@@ -466,45 +474,56 @@ onAuthStateChanged(auth, (user) => {
     });
 
 
+    const toggleBookmark = (jobId, job) => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const userUid = user.uid;
+      const userRef = ref(database, `users/${userUid}/bookmarkedJobs`);
 
+      // Fetch current bookmarked jobs
+      get(userRef)
+        .then((snapshot) => {
+          let bookmarkedJobs = snapshot.exists() ? snapshot.val() : [];
 
+          // Check if the job is already bookmarked
+          const index = bookmarkedJobs.indexOf(jobId);
+          if (index > -1) {
+            // Job is already bookmarked, remove it
+            bookmarkedJobs.splice(index, 1);
+            job.bookmarked = 'no';  // Update the job state to 'no'
+          } else {
+            // Job is not bookmarked, add it
+            bookmarkedJobs.push(jobId);
+            job.bookmarked = 'yes';  // Update the job state to 'yes'
+          }
 
+          // Update the database with the new bookmarked jobs list
+          const updates = {};
+          updates[`/users/${userUid}/bookmarkedJobs`] = bookmarkedJobs;
 
-
-
-
-
-
-
-
-
-
+          update(ref(database), updates)
+            .then(() => {
+              console.log(`Updated bookmarks: ${bookmarkedJobs}`);
+              renderJobs(jobs); // Re-render job cards to reflect the new bookmark state
+            })
+            .catch((error) => {
+              console.error("Error updating bookmarks:", error);
+            });
+        })
+        .catch((error) => {
+          console.error("Error fetching bookmarks:", error);
+        });
+    } else {
+      console.log("User not logged in. Redirecting to login page.");
+      window.location.href = "./login.html";
+    }
+  });
+};
 
 
 </script>
 
 
-
-
-
-
-
-
-
-
-
-
-
-   
-
-
-
-
-
-
-
-
-  </script>
 </head>
 <body>
   <div class="container">

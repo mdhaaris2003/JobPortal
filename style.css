@@ -199,19 +199,15 @@ body {
   display: none;
 }
 
+/* Default bookmark icon color */
+.fas.fa-bookmark {
+  color: #f39c12;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
+/* Yellow color for the saved (bookmarked) state */
+.fas.fa-bookmark.saved {
+  color: #908f8e;
+}
 
 
 
@@ -260,7 +256,7 @@ body {
   display: none;
 }
 
-.added-by-me {
+.added-by {
   position: absolute;
   bottom: 10px;
   right: 10px;
@@ -273,26 +269,6 @@ body {
   text-align: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
