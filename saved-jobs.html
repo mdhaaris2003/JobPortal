@@ -199,7 +199,6 @@ addJobBtn.addEventListener("click", () => jobModal.style.display = "flex");
     jobModal.addEventListener("click", (e) => {
       if (e.target === jobModal) jobModal.style.display = "none";
     });
-
     document.getElementById("saveJobBtn").addEventListener("click", async () => {
   const jobTitleInput = document.getElementById("jobTitle");
   const companyNameInput = document.getElementById("companyName");
@@ -222,39 +221,50 @@ addJobBtn.addEventListener("click", () => jobModal.style.display = "flex");
     return;
   }
 
-  let logoURL = "";
-  if (logoFile) {
-    const logoRef = storageRef(storage, `logos/${logoFile.name}`);
-    await uploadBytes(logoRef, logoFile);
-    logoURL = await getDownloadURL(logoRef);
-  }
+  // Ensure the user is signed in before proceeding
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      // User is signed in, get the user UID
+      const userUid = user.uid;
 
-  const jobData = {
-    jobTitle,
-    companyName,
-    location,
-    jobRole,
-    minSalary,
-    maxSalary,
-    logoURL,
-    bookmarked: "no",
-  };
+      let logoURL = "";
+      if (logoFile) {
+        const logoRef = storageRef(storage, `logos/${logoFile.name}`);
+        await uploadBytes(logoRef, logoFile);
+        logoURL = await getDownloadURL(logoRef);
+      }
 
-  const newJobRef = push(ref(database, "jobListings/"));
-  set(newJobRef, jobData);
+      const jobData = {
+        jobTitle,
+        companyName,
+        location,
+        jobRole,
+        minSalary,
+        maxSalary,
+        logoURL,
+        bookmarked: "no",
+        addedBy: userUid,  // Store the user UID as addedBy field
+      };
 
-  // Clear the form fields
-  jobTitleInput.value = "";
-  companyNameInput.value = "";
-  locationInput.value = "";
-  jobRoleInput.value = "";
-  minSalaryInput.value = "";
-  maxSalaryInput.value = "";
-  logoUploadInput.value = "";
+      const newJobRef = push(ref(database, "jobListings/"));
+      await set(newJobRef, jobData);
 
-  document.getElementById("jobModal").style.display = "none";
+      // Clear the form fields
+      jobTitleInput.value = "";
+      companyNameInput.value = "";
+      locationInput.value = "";
+      jobRoleInput.value = "";
+      minSalaryInput.value = "";
+      maxSalaryInput.value = "";
+      logoUploadInput.value = "";
+
+      document.getElementById("jobModal").style.display = "none";
+    } else {
+      // If user is not signed in, show alert and stop execution
+      alert("You must be logged in to add a job.");
+    }
+  });
 });
-
 
 // Function to fetch jobs and apply filters
 let allJobs = [];
@@ -391,9 +401,16 @@ const renderJobs = (jobs) => {
     return;
   }
 
+  // Get the current user UID from Firebase Authentication
+  const userUid = auth.currentUser ? auth.currentUser.uid : null;
+
   jobs.forEach((job) => {
     const jobCard = document.createElement("div");
     jobCard.className = "job-card";
+
+    // Check if the job was added by the current user
+    const isAddedByCurrentUser = job.addedBy === userUid;
+
     jobCard.innerHTML = `
       <h3>${job.jobTitle}</h3>
       <div class="company-info">
@@ -409,10 +426,13 @@ const renderJobs = (jobs) => {
         ${job.location}
       </div>
       <i class="fas fa-bookmark bookmark-saved" data-id="${job.id}"></i>
+      ${isAddedByCurrentUser ? '<div class="added-by-me">Added by me</div>' : ''}
     `;
+
     jobListingsContainer.appendChild(jobCard);
   });
 };
+
 
 // Listen for changes in authentication state
 onAuthStateChanged(auth, (user) => {

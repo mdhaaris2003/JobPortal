@@ -408,14 +408,15 @@ const renderJobs = (jobs) => {
               jobCard.className = "job-card";
               jobCard.innerHTML = `
                 <h3>${job.jobTitle}</h3>
+                 <div class="role-salary">
+                  <span class="role ${job.jobRole}">${job.jobRole}</span>
+                  <span class="salary">Salary: $${job.minSalary} - $${job.maxSalary}</span>
+                </div>
                 <div class="company-info">
                   <img src="${job.logoURL || 'https://via.placeholder.com/40'}" alt="Company Logo">
                   <span class="company-name">${job.companyName}</span>
                 </div>
-                <div class="role-salary">
-                  <span class="role ${job.jobRole}">${job.jobRole}</span>
-                  <span class="salary">Salary: $${job.minSalary} - $${job.maxSalary}</span>
-                </div>
+               
                 <div class="location">
                   <i class="fas fa-map-marker-alt"></i>
                   ${job.location}
