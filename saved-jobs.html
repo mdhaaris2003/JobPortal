@@ -151,7 +151,7 @@
     </select>
     <input type="number" id="minSalary" placeholder="Min Salary ($)" required>
     <input type="number" id="maxSalary" placeholder="Max Salary ($)" required>
-    <input type="file" id="logoUpload" accept="image/*">
+    <input type="text" id="logoUpload" placeholder="Enter logo image URL" />
     <button id="saveJobBtn">Save</button>
   </div>
 </div>
@@ -203,7 +203,7 @@ addJobBtn.addEventListener("click", () => jobModal.style.display = "flex");
   const jobRoleInput = document.getElementById("jobRole");
   const minSalaryInput = document.getElementById("minSalary");
   const maxSalaryInput = document.getElementById("maxSalary");
-  const logoUploadInput = document.getElementById("logoUpload");
+  const logoUploadInput = document.getElementById("logoUpload"); // Logo URL field
 
   const jobTitle = jobTitleInput.value;
   const companyName = companyNameInput.value;
@@ -211,9 +211,9 @@ addJobBtn.addEventListener("click", () => jobModal.style.display = "flex");
   const jobRole = jobRoleInput.value;
   const minSalary = minSalaryInput.value;
   const maxSalary = maxSalaryInput.value;
-  const logoFile = logoUploadInput.files[0];
+  const logoURL = logoUploadInput.value; // Use the URL directly from the input
 
-  if (!jobTitle || !companyName || !location || !jobRole || !minSalary || !maxSalary) {
+  if (!jobTitle || !companyName || !location || !jobRole || !minSalary || !maxSalary || !logoURL) {
     alert("Please fill all fields.");
     return;
   }
@@ -224,13 +224,6 @@ addJobBtn.addEventListener("click", () => jobModal.style.display = "flex");
       // User is signed in, get the user UID
       const userUid = user.uid;
 
-      let logoURL = "";
-      if (logoFile) {
-        const logoRef = storageRef(storage, `logos/${logoFile.name}`);
-        await uploadBytes(logoRef, logoFile);
-        logoURL = await getDownloadURL(logoRef);
-      }
-
       const jobData = {
         jobTitle,
         companyName,
@@ -238,9 +231,9 @@ addJobBtn.addEventListener("click", () => jobModal.style.display = "flex");
         jobRole,
         minSalary,
         maxSalary,
-        logoURL,
+        logoURL, // Directly store the logo URL
         bookmarked: "no",
-        addedBy: userUid,  // Store the user UID as addedBy field
+        addedBy: userUid, // Store the user UID as addedBy field
       };
 
       const newJobRef = push(ref(database, "jobListings/"));
@@ -253,7 +246,7 @@ addJobBtn.addEventListener("click", () => jobModal.style.display = "flex");
       jobRoleInput.value = "";
       minSalaryInput.value = "";
       maxSalaryInput.value = "";
-      logoUploadInput.value = "";
+      logoUploadInput.value = ""; // Clear the URL input field
 
       document.getElementById("jobModal").style.display = "none";
     } else {
