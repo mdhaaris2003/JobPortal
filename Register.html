@@ -11,7 +11,7 @@
       margin: 0;
       padding: 0;
       font-family: 'Poppins', sans-serif;
-      background: url('./bg2.jpeg') no-repeat center center/cover;
+      background: url('./images/registerbg.jpg') no-repeat center center/cover;
       height: 100vh;
       color: #ffffff;
     }
@@ -22,29 +22,46 @@
       margin-bottom: 1rem;
     }
 
+     .container {
+      display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            /* Full height of the viewport */
+            width: 450px;
+            /* Full width of the viewport */
+            position: absolute;
+            top: 0px;
+            left:450px;
+            background-color: rgba(241, 238, 238, 0.3);
+            /* Semi-transparent overlay */
+            backdrop-filter: blur(10px);
+        }
+
     /* Quotes Section */
     .quotes {
       position: absolute;
       top: 200px;
-      left: 1px;
+      left: 20px;
       font-size: 1.5rem;
       line-height: 2;
       font-style: italic;
-      color: rgba(255, 255, 255, 0.9);
+      color: rgb(200, 0, 255);
       text-shadow: 2px 2px 4px rgba(80, 202, 218, 0.6);
     }
 
     /* Register Container */
     .register-container {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(233, 225, 238, 255);
       border-radius: 15px;
       padding: 2rem;
-      width: 90%;
+      width: 100%;
       max-width: 400px;
-      margin: auto;
+      align-items: center;
+            justify-items: center;
+      /* margin: auto;
       margin-top: 100px;
-      margin-left: 490px;
-      box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+      margin-left: 490px; */
     }
 
     .register-container h1 {
@@ -60,7 +77,10 @@
       border-radius: 10px;
       padding: 0.9rem;
       margin-bottom: 1rem;
+      width: 350px;;
       font-size: 1rem;
+      background-color: rgba(239, 228, 268, 265);
+
     }
 
     .form-control:focus {
@@ -70,7 +90,7 @@
     }
 
     .btn-register {
-      background-color: #5a67d8;
+      background-color:  #5E2E87;
       color: white;
       font-size: 1rem;
       font-weight: 500;
@@ -107,14 +127,15 @@
 <body>
   <!-- Quotes Section -->
   <div class="quotes">
-    "Empowering your career, one step at a time."
+    "Empowering your career,<br> one step at a time."
     <br>
     <span>- A gateway to opportunities</span>
   </div>
+  <div class="container">
 
   <!-- Register Container -->
   <div class="register-container">
-    <center><img src="./logo3.jpg" alt="Application Logo" class="logo"></center>
+    <center><img src="./images/logo3.jpg" alt="Application Logo" class="logo"></center>
 
     <h1>Create an Account</h1>
     <form id="registerForm">
@@ -126,7 +147,7 @@
       <a href="./index.html" class="login-link">Already have an account? Login</a>
     </form>
   </div>
-
+</div>
   <!-- Firebase SDK (Modular Approach with ES Module Syntax) -->
   <script type="module">
     // Import Firebase modules

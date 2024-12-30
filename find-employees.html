@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+
+  <title>Find Employees</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+    }
+
+    
+    .find-emp {
+      text-align: center;
+      padding: 20px;
+      background-color: #333;
+      color: white;
+    }
+
+    #filters {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px;
+    }
+
+    #filters input, #filters button {
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    #employee-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .employee-card {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .employee-card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+
+    .employee-card h3 {
+      margin: 10px 0;
+    }
+
+    .employee-card p {
+      margin: 5px 0;
+      color: #555;
+    }
+  </style>
+  
+</head>
+
+<body>
+  
+<header class="find-emp">
+
+  <header class="navbar-os">
+    <!-- Top Row: Logo and Navigation -->
+    <div class="top-row-os">
+     
+
+      <!-- Navigation Links -->
+      <nav>
+        <ul class="nav-links-os">
+          <li><a href="home.html" >Home</a></li>
+          <li><a href="job.html">Find Job</a></li>
+          <li><a href="find-employees.html" class="active">Find Employers</a></li>
+          <li><a href="#">Job Alerts</a></li>
+          <li><a href="saved-jobs.html" >Saved Job & Added by Me</a></li>
+        </ul>
+   
+      </nav>
+      <div class="info">
+        <p class="contact">+1-202-555-0178</p>
+        <select id="language-select" name="language">
+            <option value="en">English</option>
+            <option value="es">Spanish</option>
+            <option value="fr">French</option>
+            <option value="de">German</option>
+            <option value="it">Italian</option>
+        </select>
+
+    </div>
+
+    </div>
+  </header>
+    <h1>Find Employees</h1>
+    <div id="filters">
+      <input type="text" id="skill" placeholder="Skill (e.g., JavaScript)">
+      <input type="text" id="location" placeholder="Location (e.g., New York)">
+      <input type="number" id="experience" placeholder="Experience (Years)">
+      <input type="text" id="qualification" placeholder="Qualification (e.g., B.Tech)">
+      <button id="search-btn">Search</button>
+    </div>
+  </header>
+</header>
+  <main>
+    <div id="employee-list"></div>
+  </main>
+  <script>
+    const employeeList = document.getElementById("employee-list");
+    const searchBtn = document.getElementById("search-btn");
+
+    // Fetch employees using the Random User API
+   // Fetch employees with pagination to get a large number of profiles
+const fetchEmployees = async (totalResults = 100) => {
+  const batchSize = 50; // Number of results per API request
+  const requests = Math.ceil(totalResults / batchSize); // Total number of requests needed
+  const allEmployees = [];
+
+  try {
+    for (let i = 0; i < requests; i++) {
+      const response = await fetch(`https://randomuser.me/api/?results=${batchSize}`);
+      const data = await response.json();
+      allEmployees.push(...data.results);
+    }
+    return allEmployees;
+  } catch (error) {
+    console.error("Error fetching employees:", error);
+  }
+};
+
+
+    // Render employees
+    const renderEmployees = (employees, filters = {}) => {
+      employeeList.innerHTML = "";
+
+      const filteredEmployees = employees.filter((employee) => {
+        const { skill, location, experience, qualification } = filters;
+
+        const matchesSkill =
+          !skill || employee.skill?.toLowerCase().includes(skill.toLowerCase());
+        const matchesLocation =
+          !location ||
+          employee.location.city.toLowerCase().includes(location.toLowerCase());
+        const matchesExperience =
+          !experience || employee.experience >= parseInt(experience);
+        const matchesQualification =
+          !qualification ||
+          employee.qualification
+            ?.toLowerCase()
+            .includes(qualification.toLowerCase());
+
+        return matchesSkill && matchesLocation && matchesExperience && matchesQualification;
+      });
+
+      if (filteredEmployees.length === 0) {
+        employeeList.innerHTML = "<p>No employees match your filters.</p>";
+        return;
+      }
+
+      filteredEmployees.forEach((employee) => {
+        const card = document.createElement("div");
+        card.className = "employee-card";
+        card.innerHTML = `
+          <img src="${employee.picture.large}" alt="${employee.name.first}">
+          <h3>${employee.name.first} ${employee.name.last}</h3>
+          <p>Location: ${employee.location.city}, ${employee.location.country}</p>
+          <p>Experience: ${employee.experience || "Not specified"} years</p>
+          <p>Qualification: ${employee.qualification || "Not specified"}</p>
+          <p>Skill: ${employee.skill || "Not specified"}</p>
+        `;
+        employeeList.appendChild(card);
+      });
+    };
+
+    // Mock employee data with skills, experience, and qualification
+    const enhanceEmployeeData = (employees) => {
+      const skills = ["JavaScript", "Python", "Java", "C++", "React", "Node.js"];
+      const qualifications = ["B.Tech", "M.Tech", "B.Sc", "MCA", "MBA"];
+      const experienceYears = [1, 2, 3, 5, 7, 10];
+
+      return employees.map((employee) => ({
+        ...employee,
+        skill: skills[Math.floor(Math.random() * skills.length)],
+        qualification:
+          qualifications[Math.floor(Math.random() * qualifications.length)],
+        experience: experienceYears[Math.floor(Math.random() * experienceYears.length)],
+      }));
+    };
+
+    // Initialize the page with employees
+    let employeesData = [];
+    fetchEmployees().then((employees) => {
+      employeesData = enhanceEmployeeData(employees);
+      renderEmployees(employeesData);
+    });
+
+    // Search functionality
+    searchBtn.addEventListener("click", () => {
+      const filters = {
+        skill: document.getElementById("skill").value,
+        location: document.getElementById("location").value,
+        experience: document.getElementById("experience").value,
+        qualification: document.getElementById("qualification").value,
+      };
+      renderEmployees(employeesData, filters);
+    });
+  </script>
+</body>
+</html>

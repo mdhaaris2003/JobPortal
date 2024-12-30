@@ -18,9 +18,9 @@
       <!-- Navigation Links -->
       <nav>
         <ul class="nav-links-os">
-          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="home.html" >Home</a></li>
           <li><a href="job.html"class="active">Find Job</a></li>
-          <li><a href="#">Find Employers</a></li>
+          <li><a href="find-employees.html">Find Employers</a></li>
           <li><a href="#">Job Alerts</a></li>
           <li><a href="saved-jobs.html">Saved Job & Added by Me</a></li>
         </ul>
@@ -46,7 +46,7 @@
 
        <!-- Logo Section -->
        <div class="logo-os">
-        <img src="logo3.jpg" alt="Skill Hire Logo" class="logo-img">
+        <img src=".\images\logo3.jpg" alt="Skill Hire Logo" class="logo-img">
         <span style="font-weight: bold;font-size:x-large ;font-family: 'Times New Roman', Times, serif;">Job Finder</span>
       </div>
 
@@ -76,8 +76,6 @@
           <!-- Add more countries as needed -->
         </div>
       </div>
-      
-
       <!-- Search Bar -->
       <div class="search-bar-os">
         <input type="text" placeholder="Job title, keyword, company" id="keywordaSearch">
@@ -90,18 +88,11 @@
       <!-- User Profile -->
       <div class="profile-os">
         <i class="fas fa-user-circle"></i>
-  <div id="username" class="username"></div>      </div>
-
-
-
+      <div id="username" class="username"></div>      </div>
     </div>
   </header>
-
   
   <!-- Filters -->
-  
-
-
   <div class="header-container">
     <div class="qf">  <p class="quick-filters-text">Quick Filters</p>
       <i class="fa-solid fa-bars" style="color: #000000; font-weight: bolder;"></i>
@@ -150,7 +141,7 @@
   <!-- Modal -->
   <div class="modal" id="jobModal">
     <div class="modal-content">
-      <h3>Add Job</h3>
+      <h3>Add New Job</h3>
       <input type="text" id="jobTitle" placeholder="Job Title" required>
       <input type="text" id="companyName" placeholder="Company Name" required>
       <input type="text" id="location" placeholder="Location (e.g., City, Country)" required>
@@ -162,7 +153,7 @@
       </select>
       <input type="number" id="minSalary" placeholder="Min Salary ($)" required>
       <input type="number" id="maxSalary" placeholder="Max Salary ($)" required>
-      <input type="file" id="logoUpload" accept="image/*">
+<input type="text" id="logoUpload" placeholder="Enter logo image URL" />
       <button id="saveJobBtn">Save</button>
     </div>
   </div>
@@ -208,7 +199,6 @@
     jobModal.addEventListener("click", (e) => {
       if (e.target === jobModal) jobModal.style.display = "none";
     });
-
     document.getElementById("saveJobBtn").addEventListener("click", async () => {
   const jobTitleInput = document.getElementById("jobTitle");
   const companyNameInput = document.getElementById("companyName");
@@ -216,7 +206,7 @@
   const jobRoleInput = document.getElementById("jobRole");
   const minSalaryInput = document.getElementById("minSalary");
   const maxSalaryInput = document.getElementById("maxSalary");
-  const logoUploadInput = document.getElementById("logoUpload");
+  const logoUploadInput = document.getElementById("logoUpload"); // Logo URL field
 
   const jobTitle = jobTitleInput.value;
   const companyName = companyNameInput.value;
@@ -224,9 +214,9 @@
   const jobRole = jobRoleInput.value;
   const minSalary = minSalaryInput.value;
   const maxSalary = maxSalaryInput.value;
-  const logoFile = logoUploadInput.files[0];
+  const logoURL = logoUploadInput.value; // Use the URL directly from the input
 
-  if (!jobTitle || !companyName || !location || !jobRole || !minSalary || !maxSalary) {
+  if (!jobTitle || !companyName || !location || !jobRole || !minSalary || !maxSalary || !logoURL) {
     alert("Please fill all fields.");
     return;
   }
@@ -237,13 +227,6 @@
       // User is signed in, get the user UID
       const userUid = user.uid;
 
-      let logoURL = "";
-      if (logoFile) {
-        const logoRef = storageRef(storage, `logos/${logoFile.name}`);
-        await uploadBytes(logoRef, logoFile);
-        logoURL = await getDownloadURL(logoRef);
-      }
-
       const jobData = {
         jobTitle,
         companyName,
@@ -251,9 +234,9 @@
         jobRole,
         minSalary,
         maxSalary,
-        logoURL,
+        logoURL, // Directly store the logo URL
         bookmarked: "no",
-        addedBy: userUid,  // Store the user UID as addedBy field
+        addedBy: userUid, // Store the user UID as addedBy field
       };
 
       const newJobRef = push(ref(database, "jobListings/"));
@@ -266,7 +249,7 @@
       jobRoleInput.value = "";
       minSalaryInput.value = "";
       maxSalaryInput.value = "";
-      logoUploadInput.value = "";
+      logoUploadInput.value = ""; // Clear the URL input field
 
       document.getElementById("jobModal").style.display = "none";
     } else {
@@ -275,7 +258,6 @@
     }
   });
 });
-
 
 
   const countryLinksOS = document.querySelectorAll('.dropdown-content-os a');
@@ -501,8 +483,6 @@ const toggleBookmark = (jobId, job) => {
 // Initialize by fetching jobs
 fetchJobs();
 
-    //fetchSavedJobs();
-
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in, fetch the username from the database
@@ -522,8 +502,6 @@ fetchJobs();
         window.location.href = './index.html';
       }
     });
-
-
   </script>
 </body>
 </html>

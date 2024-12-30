@@ -13,14 +13,28 @@
       margin: 0;
       padding: 0;
       font-family: 'Poppins', sans-serif;
-      background: url('./bgmain.jpg') no-repeat center center/cover;
+      background: url('./images/bgmain.jpg') no-repeat center center/cover;
       height: 100vh;
-      color: #ffffff;
+      color: #ab99ee;
       display: flex;
       justify-content: center;
       align-items: center;
     }
-
+    .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            /* Full height of the viewport */
+            width: 550px;
+            /* Full width of the viewport */
+            position: absolute;
+            top: 0px;
+            right: 35px;
+            background-color: rgba(241, 238, 238, 0.3);
+            /* Semi-transparent overlay */
+            backdrop-filter: blur(10px);
+        }
     .app-name {
       position: absolute;
       top: 20px;
@@ -56,13 +70,12 @@
     }
 
     .login-container {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(233, 225, 238, 255);
       border-radius: 15px;
       padding: 2rem;
       width: 90%;
       max-width: 400px;
       text-align: center;
-      box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
     }
 
     .login-container img {
@@ -72,7 +85,7 @@
 
     .login-container h1 {
       font-size: 1.8rem;
-      font-weight: 600;
+      font-weight: bolder;
       color: #333333;
       margin-bottom: 1.5rem;
     }
@@ -83,6 +96,7 @@
       padding: 0.9rem;
       margin-bottom: 1.2rem;
       font-size: 1rem;
+      background-color: rgba(239, 228, 268, 265);
     }
 
     .form-control:focus {
@@ -92,13 +106,13 @@
     }
 
     .btn-login {
-      background-color: #ff7b54;
+      background-color:  #5E2E87;
       color: white;
-      font-size: 1rem;
-      font-weight: 500;
+      font-size: 1.2rem;
+      font-weight: bold;
       border: none;
-      padding: 0.8rem 1rem;
-      border-radius: 25px;
+      padding: 0.6rem 1rem;
+      border-radius: 15px;
       cursor: pointer;
       transition: all 0.3s ease-in-out;
       margin-top: 1rem;
@@ -106,7 +120,7 @@
     }
 
     .btn-login:hover {
-      background-color: #ff5722;
+      background-color: #730a96;
       box-shadow: 0px 4px 12px rgba(255, 87, 34, 0.4);
       transform: scale(1.05);
     }
@@ -127,21 +141,23 @@
     }
 
     .btn-google {
-      background-color: #4285F4;
+      background-color:  #5E2E87;
       color: white;
-      font-size: 1rem;
-      font-weight: 500;
+      font-size: 1.2rem;
+      font-weight: bold;
+      
       border: none;
-      padding: 0.8rem 1rem;
-      border-radius: 25px;
+      padding: 0.6rem 1rem;
+      border-radius: 15px;
       cursor: pointer;
       transition: all 0.3s ease-in-out;
       margin-top: 1rem;
       width: 100%;
     }
+   
 
     .btn-google:hover {
-      background-color: #357ae8;
+      background-color: #3c1580;
       box-shadow: 0px 4px 12px rgba(66, 133, 244, 0.4);
       transform: scale(1.05);
     }
@@ -149,7 +165,9 @@
 </head>
 <body>
   <!-- Application Name -->
-  <div class="app-name">JobConnect Portal</div>
+  <div class="app-name">
+
+    JobConnect Portal</div>
 
   <!-- Quotes Section -->
   <div class="quotes">
@@ -158,6 +176,7 @@
     "Discover opportunities, redefine your future."
     <span>- Welcome to JobConnect</span>
   </div>
+  <div class="container">
 
   <!-- Login Container -->
   <div class="login-container">
@@ -171,7 +190,7 @@
     <button id="googleSignIn" class="btn-google">Sign in with Google</button>
     <a href="Register.html" class="register-link">Don't have an account? Register</a>
   </div>
-
+</div>
   <!-- Firebase Configuration -->
   <script type="module">
     // Firebase Configuration
