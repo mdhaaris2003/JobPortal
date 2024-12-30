@@ -624,7 +624,21 @@ body {
         font-weight: bold;
       }
 
+/* Mobile styles */
+@media (max-width: 768px) {
+  .company-logo {
+      width: 48%; /* Two logos per row */
+      margin: 10px 1%;
+  }
+}
 
+/* Small mobile (portrait mode) styles */
+@media (max-width: 480px) {
+  .company-logo {
+      width: 100%; /* One logo per row */
+      margin: 10px 0;
+  }
+}
 
 
 
