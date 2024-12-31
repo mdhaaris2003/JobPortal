@@ -41,7 +41,7 @@ You can access the job portal at the following link:
 ![Homepage Screenshot](images/register.png "Homepage of the Job Portal")
 
 ### **Job Listings**
-![Job Listings Screenshot](images/job3.png "Job1 Listings Page")
+![Job Listings Screenshot](images/job5.png "Job1 Listings Page")
 
 ### **Job Listings after Filters being applied**
 ![Job Listings Screenshot](images/job1.png "Filters Listings Page")
