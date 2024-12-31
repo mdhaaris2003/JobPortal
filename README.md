@@ -28,13 +28,38 @@ You can access the job portal at the following link:
 ## **Application Images**
 
 ### **Homepage**
-![Homepage Screenshot](images/homepage.png "Homepage of the Job Portal")
+![Homepage Screenshot](images/home.png "Homepage of the Job Portal")
+
+### **Login page**
+![Homepage Screenshot](images/login.png "Homepage of the Job Portal")
+
+### **Register page**
+![Homepage Screenshot](images/register.png "Homepage of the Job Portal")
 
 ### **Job Listings**
-![Job Listings Screenshot](images/job-listings.png "Job Listings Page")
+![Job Listings Screenshot](images/job.png "Job1 Listings Page")
 
-### **Application Form**
-![Application Form Screenshot](images/application-form.png "Job Application Form")
+### **Job Listings after Filters being applied**
+![Job Listings Screenshot](images/job1.png "Filters Listings Page")
+
+### **Popup when a job is saved/bookmarked**
+![Job Listings Screenshot](images/job2.png "Job Listings Page")
+
+### **Find-Employees**
+Random Employee details fetched from the API: **https://randomuser.me/api/**
+![Application Form Screenshot](images/find-employees.png "Job Application Form")
+
+
+### **Firebase Integration for Database and Authentication**
+
+**Firebase Realtime Database**
+
+![Application Form Screenshot](images/firebase1.png "Job Application Form")
+
+**Firebase Authentication**
+
+![Application Form Screenshot](images/firebase2.png "Job Application Form")
+
 
 
 ## **Installation**
