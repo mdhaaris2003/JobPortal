@@ -1,5 +1,5 @@
 # **Job Portal Application**
-
+ Portal Link- https://mdhaaris2003.github.io/JobPortal/
 ## **Overview**
 
 <p style="font-size:24px; font-weight:bold;">The Job Portal Application is a simple front-end platform designed to connect job seekers with employers. It allows users to browse job listings and apply for jobs. Employers can view job applications and manage their job postings. The portal is hosted on GitHub Pages for easy access.</p>
