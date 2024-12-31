@@ -8,9 +8,11 @@ The **Job Portal Application** is a comprehensive platform designed to connect j
 
 - **User Authentication**: Secure login and registration for both job seekers and employers using **Firebase Authentication**.
 - **Job Listings**: Browse available job listings with advanced search filters.
-- **Job Applications**: Apply for jobs directly through the portal.
+- **Advanced Filters**:
+  - **Location-Based Filtering**: Find jobs in specific cities or regions.
+  - **Industry and Role Filtering**: Search for jobs in preferred industries or roles.
+  - **Salary Range Filtering**: Filter jobs based on salary expectations.
 - **Profile Management**: Job seekers can create and update their profiles, stored securely in the **Firebase Database**.
-- **Employer Job Management**: Employers can view and manage posted job openings.
 
 ## **Technologies Used**
 
@@ -23,7 +25,7 @@ The **Job Portal Application** is a comprehensive platform designed to connect j
 ### **Backend**
 
 - **Firebase Authentication**: Secure user login and registration.
-- **Firebase Realtime Database**: Storing job listings, applications, and user profiles.
+- **Firebase Realtime Database**: Storing job listings,user profiles and Fetch them from the DB when required.
 ### **Application Hosted in GitHub pages**
 You can access the job portal at the following link:
 (https://mdhaaris2003.github.io/JobPortal/))
