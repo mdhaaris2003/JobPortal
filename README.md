@@ -47,7 +47,7 @@ You can access the job portal at the following link:
 ![Job Listings Screenshot](images/job1.png "Filters Listings Page")
 
 ### **Popup when a job is saved/bookmarked**
-![Job Listings Screenshot](images/job2.png "Job Listings Page")
+![Job Listings Screenshot](images/job3.png "Job Listings Page")
 
 ### **Saved Jobs**
 ![Job Listings Screenshot](images/saved-jobs.png "Job Listings Page")
