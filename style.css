@@ -87,6 +87,55 @@ body {
   border-radius: 5px;
 }
 
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px 40px;
+  background-color: #5b3076;
+  color: white;
+  font-size: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.popup.hidden {
+  display: none;
+}
+
+.popup span {
+  font-weight: bold;
+}
+
+.popup-bookmark-icon {
+  font-size: 24px; /* Adjust icon size */
+}
+
+.popup-close-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.popup-close-button:hover {
+  color: #ffcccc; /* Light red hover effect */
+}
+
+
 /* Header Container */
 
 
