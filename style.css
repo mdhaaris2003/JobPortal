@@ -24,7 +24,8 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  
+  z-index: 1000;
+
   padding: 10px 20px;
   background: rgba(233, 225, 238, 255);
   /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
@@ -106,6 +107,7 @@ body {
     padding: 10px;
     margin: 20px;
     margin-top: 5px;
+    z-index: 1000;;
   }
 
 
@@ -409,6 +411,7 @@ body {
   font-size: larger;
   cursor: pointer;
   transition: background 0.3s ease;
+  z-index: 1000;
 }
 
 .filter-dropdown button:hover {
@@ -424,7 +427,7 @@ body {
   border: 1px solid #ddd;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1000000000;
+  z-index: 1000;
   padding: 15px;
   width: 250px;
 }
@@ -490,6 +493,7 @@ body {
     flex-wrap: wrap;
     gap: 20px;
     padding: 20px;
+    z-index: 1;
   }
   
   .container {
@@ -498,6 +502,8 @@ body {
     gap: 20px;
     max-width: 1250px;
     width: 100%;
+    
+
   }
   
   .job-card {
@@ -509,6 +515,7 @@ body {
     margin-top: 15px;
     position: relative;
     overflow: hidden;
+    z-index: 1;
     transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
   }
   
